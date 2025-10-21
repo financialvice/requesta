@@ -1,5 +1,5 @@
 import { Text } from "react-native";
-import Container from "@/components/container";
+import { Container } from "@/components/container";
 
 export default function TabTwoScreen() {
   return (

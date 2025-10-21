@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUserProfile } from "@repo/db";
+import { db } from "@repo/db";
 import { Button } from "@repo/ui/components/button";
 import {
   Dialog,
@@ -35,7 +35,7 @@ const userDetailsSchema = z.object({
 type UserDetailsFormData = z.infer<typeof userDetailsSchema>;
 
 export function UserSettingsDialog() {
-  const { userProfile, signOut, updateUserProfile } = useUserProfile();
+  const { userProfile, signOut, updateUserProfile } = db.useUserProfile();
 
   const form = useForm<UserDetailsFormData>({
     resolver: zodResolver(userDetailsSchema),

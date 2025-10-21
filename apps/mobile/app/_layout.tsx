@@ -1,43 +1,61 @@
-import { useFonts } from "expo-font";
+import { db } from "@repo/db";
 import { Stack } from "expo-router";
-import { useEffect } from "react";
-import "react-native-reanimated";
-
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
-
-export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
-};
+import { ActivityIndicator, Text, View } from "react-native";
 
 export default function RootLayout() {
-  const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-  });
+  const { isLoading, error, user } = db.useAuth();
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
-  useEffect(() => {
-    if (error) {
-      console.error(error);
-      throw error;
-    }
-  }, [error]);
-
-  if (!loaded) {
-    return null;
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
-  return <RootLayoutNav />;
-}
+  if (error) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+          paddingHorizontal: 24,
+        }}
+      >
+        <Text
+          style={{
+            textAlign: "center",
+            fontSize: 16,
+            fontWeight: "600",
+            color: "#EF4444",
+          }}
+        >
+          {error.message}
+        </Text>
+      </View>
+    );
+  }
 
-function RootLayoutNav() {
+  const isSignedIn = Boolean(user);
+
   return (
     <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+      <Stack.Protected guard={!isSignedIn}>
+        <Stack.Screen name="login" options={{ headerShown: false }} />
+      </Stack.Protected>
+
+      <Stack.Protected guard={isSignedIn}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack.Protected>
     </Stack>
   );
 }

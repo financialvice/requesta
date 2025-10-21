@@ -1,5 +1,6 @@
-import { RedirectSignedOut, SignedIn } from "@repo/db";
+import { db } from "@repo/db";
 import { SidebarProvider } from "@repo/ui/components/sidebar";
+import { useRouter } from "next/navigation";
 import { AppSidebar } from "../../components/app-sidebar";
 
 export default function AuthedLayout({
@@ -7,17 +8,19 @@ export default function AuthedLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+
   return (
     <>
-      <RedirectSignedOut to="/login" />
-      <SignedIn>
+      <db.RedirectSignedOut onRedirect={() => router.push("/login")} />
+      <db.SignedIn>
         <SidebarProvider>
           <AppSidebar />
           <main className="relative h-screen flex-1 overflow-hidden">
             {children}
           </main>
         </SidebarProvider>
-      </SignedIn>
+      </db.SignedIn>
     </>
   );
 }

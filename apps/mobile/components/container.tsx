@@ -1,7 +1,7 @@
 import { type StyleProp, StyleSheet, View, type ViewStyle } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Container({
+export function Container({
   children,
   style,
 }: {
@@ -18,7 +18,6 @@ export default function Container({
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "green",
   },
   container: {
     flex: 1,

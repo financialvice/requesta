@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  RedirectSignedIn,
-  SignedOut,
-  sendMagicCode,
-  signInWithMagicCode,
-} from "@repo/db";
+import { db } from "@repo/db";
 import { Button } from "@repo/ui/components/button";
 import {
   Card,
@@ -19,15 +14,18 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@repo/ui/components/input-otp";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
 export default function LoginPage() {
+  const router = useRouter();
+
   return (
     <>
-      <SignedOut>
+      <db.SignedOut>
         <Login />
-      </SignedOut>
-      <RedirectSignedIn to="/" />
+      </db.SignedOut>
+      <db.RedirectSignedIn onRedirect={() => router.push("/")} />
     </>
   );
 }
@@ -65,7 +63,7 @@ function EmailStep({ onSendEmail }: { onSendEmail: (email: string) => void }) {
     }
     const email = inputEl.value;
     onSendEmail(email);
-    sendMagicCode({ email }).catch((err) => {
+    db.auth.sendMagicCode({ email }).catch((err) => {
       alert(`Uh oh : ${err.body?.message}`);
       onSendEmail("");
     });
@@ -120,16 +118,18 @@ function CodeStep({
     if (value.length !== 6) {
       return;
     }
-    signInWithMagicCode({ email: sentEmail, code: value }).catch((err) => {
-      setValue("");
-      alert(`Uh oh : ${err.body?.message}`);
-    });
+    db.auth
+      .signInWithMagicCode({ email: sentEmail, code: value })
+      .catch((err) => {
+        setValue("");
+        alert(`Uh oh : ${err.body?.message}`);
+      });
   };
 
   const handleResend = async () => {
     setIsResending(true);
     try {
-      await sendMagicCode({ email: sentEmail });
+      await db.auth.sendMagicCode({ email: sentEmail });
       alert("Code resent! Check your email.");
     } catch (err) {
       alert(
@@ -143,10 +143,12 @@ function CodeStep({
   const handleSetValue = (newValue: string) => {
     setValue(newValue);
     if (value.length === 6) {
-      signInWithMagicCode({ email: sentEmail, code: value }).catch((err) => {
-        setValue("");
-        alert(`Uh oh : ${err.body?.message}`);
-      });
+      db.auth
+        .signInWithMagicCode({ email: sentEmail, code: value })
+        .catch((err) => {
+          setValue("");
+          alert(`Uh oh : ${err.body?.message}`);
+        });
     }
   };
 

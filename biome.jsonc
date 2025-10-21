@@ -21,7 +21,8 @@
         "useFocusableInteractive": "off"
       },
       "correctness": {
-        "noInvalidPositionAtImportRule": "off"
+        "noInvalidPositionAtImportRule": "off",
+        "useExhaustiveDependencies": "off"
       },
       "nursery": {
         "useAnchorHref": "off",

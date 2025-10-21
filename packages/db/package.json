@@ -4,29 +4,45 @@
   "type": "module",
   "private": true,
   "exports": {
-    ".": "./src/index.ts",
-    "./schema": "./src/instant.schema.ts",
-    "./perms": "./src/instant.perms.ts",
-    "./utils": "./src/utils.ts"
+    ".": {
+      "react-native": "./src/index.native.ts",
+      "default": "./src/index.ts"
+    }
   },
   "scripts": {
-    "db:push-schema": "instant-cli push schema",
-    "db:push-perms": "instant-cli push perms",
     "lint": "biome check .",
     "lint:fix": "biome check . --write",
     "lint:fix:unsafe": "biome check . --unsafe --write",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@instantdb/admin": "catalog:",
     "@instantdb/core": "catalog:",
-    "@instantdb/react": "catalog:",
-    "@types/react": "catalog:",
-    "next": "catalog:",
-    "react": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@instantdb/react": "catalog:",
+    "@instantdb/react-native": "catalog:",
     "@repo/typescript-config": "workspace:*",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
     "instant-cli": "catalog:"
+  },
+  "peerDependencies": {
+    "@instantdb/react": "catalog:",
+    "@instantdb/react-native": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "@instantdb/react": {
+      "optional": true
+    },
+    "@instantdb/react-native": {
+      "optional": true
+    },
+    "next": {
+      "optional": true
+    }
   }
 }

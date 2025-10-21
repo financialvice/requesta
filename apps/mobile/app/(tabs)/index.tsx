@@ -1,5 +1,5 @@
 import { StyleSheet, Text } from "react-native";
-import Container from "@/components/container";
+import { Container } from "@/components/container";
 
 export default function TabOneScreen() {
   return (
@@ -10,10 +10,6 @@ export default function TabOneScreen() {
 }
 
 const textStyle = StyleSheet.create({
-  container: {
-    backgroundColor: "blue",
-  },
-  fontBold: {
-    fontWeight: "bold",
-  },
+  container: {},
+  fontBold: {},
 });
