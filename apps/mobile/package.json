@@ -1,0 +1,48 @@
+{
+  "name": "mobile",
+  "main": "expo-router/entry",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --write",
+    "lint:fix:unsafe": "biome check . --unsafe --write",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@expo/vector-icons": "catalog:",
+    "@react-navigation/native": "catalog:",
+    "expo": "catalog:",
+    "expo-constants": "catalog:",
+    "expo-font": "catalog:",
+    "expo-linking": "catalog:",
+    "expo-router": "catalog:",
+    "expo-splash-screen": "catalog:",
+    "expo-status-bar": "catalog:",
+    "expo-web-browser": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-native": "catalog:",
+    "react-native-reanimated": "catalog:",
+    "react-native-safe-area-context": "catalog:",
+    "react-native-screens": "catalog:",
+    "react-native-web": "catalog:",
+    "react-native-worklets": "catalog:",
+    "tailwindcss": "catalog:",
+    "uniwind": "^1.0.0-rc.1"
+  },
+  "devDependencies": {
+    "@expo/metro-config": "~54.0.2",
+    "@types/react": "catalog:",
+    "@types/react-native": "catalog:",
+    "metro": "catalog:",
+    "metro-core": "catalog:",
+    "metro-resolver": "catalog:",
+    "react-test-renderer": "catalog:",
+    "typescript": "catalog:"
+  },
+  "private": true
+}
